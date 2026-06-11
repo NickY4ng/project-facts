@@ -41,99 +41,84 @@ th{font-weight:600;color:var(--muted);font-size:.75rem;text-transform:uppercase;
 │   ├── 车辆分布类（7个）→ d_vehicle_static_all
 │   ├── 运营指标类（2个）→ dws_vehicle_gathermile_m
 │   ├── 通行频次类（2个）→ dws_vehicle_pass_*_m
-│   └── 对比分析类（1个）→ dws_vehicle_gathermile_m
-├── 下载模板（4个：保有量/新增车辆/迁出/运单明细）
-└── 工具：企业名称解密（无权限管控，仅诚实实业在用）</div>
+│   └── 对比分析类（1个）
+├── 下载模板（4个）
+│   ├── 新增车辆统计 — 诚实实业专用
+│   └── 迁出统计 — 诚实实业专用
+└── 工具：企业名称解密</div>
 
-<h3>数据资产（ClickHouse，35个表）</h3>
+<h3>数据资产（ClickHouse，已导入 8 个表）</h3>
+<p style="color:var(--muted);">数据时间：2025年1月至今</p>
 <table>
-<tr><th>层级</th><th>表数</th><th>核心表</th></tr>
-<tr><td>DWD 明细层</td><td>17</td><td>虚拟运单(1.8TB)、车辆轨迹(621TB)、停留点(42.5TB)</td></tr>
-<tr><td>DWS 汇总层</td><td>11</td><td>过城/县/省日/月、常跑线路月、聚集里程日/月</td></tr>
-<tr><td>D 维度层</td><td>7</td><td>车辆(872万)、车辆静态(2299万)、公司(79万)</td></tr>
+<tr><th>表名</th><th>中文名</th><th>更新频率</th><th>大小</th><th>月均行数</th></tr>
+<tr><td>d_vehicle</td><td>车辆基本信息</td><td>全量</td><td>17.4 GB</td><td>872 万（总计）</td></tr>
+<tr><td>d_vehicle_static_all</td><td>车辆静态信息全量</td><td>全量</td><td>14.2 GB</td><td>2,299 万（总计）</td></tr>
+<tr><td>dws_vehicle_gathermile_m</td><td>聚集里程月</td><td>月度</td><td>15.3 GB</td><td>569 万</td></tr>
+<tr><td>dws_vehicle_pass_city_m</td><td>过城月</td><td>月度</td><td>57.3 GB</td><td>6,379 万</td></tr>
+<tr><td>dws_vehicle_pass_county_m</td><td>过县月</td><td>月度</td><td>196 GB</td><td>2.16 亿</td></tr>
+<tr><td>dws_vehicle_pass_province_m</td><td>过省月</td><td>月度</td><td>13.2 GB</td><td>1,518 万</td></tr>
+<tr><td>dws_vehicle_usual_line_m</td><td>常跑线路月</td><td>月度</td><td>12.8 GB</td><td>649 万</td></tr>
+<tr><td>dwd_vehicle_virtual_order_di</td><td>虚拟运单</td><td>月度</td><td>507.6 GB</td><td>2.18 亿</td></tr>
 </table>
 
 <h3>客户</h3>
 <table>
 <tr><th>客户</th><th>使用模板</th></tr>
-<tr><td>诚实实业</td><td>新增车辆统计(TB 34)、迁出统计(TB 35)</td></tr>
+<tr><td>诚实实业</td><td>新增车辆统计(TB 12)、迁出统计(TB 14)</td></tr>
 </table>
 </section>
 
 <section>
 <h2>一、产品事实</h2>
 
-<h3>分析模板清单（14个）</h3>
+<h3>固定模板（14个）</h3>
 <table>
-<tr><th>模板</th><th>数据源</th><th>核心产出</th></tr>
-<tr><td>同区域货物流向分析</td><td>dwd_vehicle_virtual_order_di</td><td>月度运单×货类、里程分段饼图、城市间矩阵</td></tr>
-<tr><td>跨区域货物流向分析</td><td>dwd_vehicle_virtual_order_di</td><td>同上 + 发货/收货城市TOP20</td></tr>
-<tr><td>常跑线路TOP分析</td><td>dws_vehicle_usual_line_m</td><td>跨省/省内/同城线路TOP20（GPS轨迹聚类）</td></tr>
-<tr><td>企业车辆分布</td><td>d_vehicle_static_all</td><td>指定区域企业车辆数分布</td></tr>
-<tr><td>车辆类型分布</td><td>d_vehicle_static_all</td><td>牵引车/自卸车/载货车等分布</td></tr>
-<tr><td>车辆品牌分布</td><td>d_vehicle_static_all</td><td>解放/东风/重汽等品牌分布</td></tr>
-<tr><td>燃油类型分布</td><td>d_vehicle_static_all</td><td>柴油/LNG/电动分布</td></tr>
-<tr><td>吨位区间分布</td><td>d_vehicle_static_all</td><td>按吨位分段统计</td></tr>
-<tr><td>排放标准分布</td><td>d_vehicle_static_all</td><td>国三/国四/国五/国六分布</td></tr>
-<tr><td>车龄分布</td><td>d_vehicle_static_all</td><td>按车龄分段统计</td></tr>
-<tr><td>月度行驶里程</td><td>dws_vehicle_gathermile_m</td><td>按里程分段统计</td></tr>
-<tr><td>月度运营天数</td><td>dws_vehicle_gathermile_m</td><td>按月运营天数分段</td></tr>
-<tr><td>省份通行频次</td><td>dws_vehicle_pass_province_m</td><td>各省通行车辆数排名</td></tr>
-<tr><td>城市通行频次</td><td>dws_vehicle_pass_city_m</td><td>各市通行车辆数排名</td></tr>
+<tr><th>TB</th><th>模板</th><th>数据源</th><th>核心产出</th></tr>
+<tr><td>9</td><td>同区域货物流向分析</td><td>dwd_vehicle_virtual_order_di</td><td>月度运单×货类、里程分段饼图、城市间矩阵</td></tr>
+<tr><td>7</td><td>跨区域货物流向分析</td><td>dwd_vehicle_virtual_order_di</td><td>同上 + 发货/收货城市TOP20</td></tr>
+<tr><td>23</td><td>常跑线路TOP分析</td><td>dws_vehicle_usual_line_m</td><td>跨省/省内/同城线路TOP20（GPS轨迹聚类）</td></tr>
+<tr><td>20</td><td>企业车辆分布</td><td>d_vehicle_static_all</td><td>指定区域企业车辆数分布</td></tr>
+<tr><td>24</td><td>车辆类型分布</td><td>d_vehicle_static_all</td><td>牵引车/自卸车/载货车等分布</td></tr>
+<tr><td>21</td><td>车辆品牌分布</td><td>d_vehicle_static_all</td><td>解放/东风/重汽等品牌分布</td></tr>
+<tr><td>25</td><td>燃油类型分布</td><td>d_vehicle_static_all</td><td>柴油/LNG/电动分布</td></tr>
+<tr><td>26</td><td>吨位区间分布</td><td>d_vehicle_static_all</td><td>按吨位分段统计</td></tr>
+<tr><td>27</td><td>排放标准分布</td><td>d_vehicle_static_all</td><td>国三/国四/国五/国六分布</td></tr>
+<tr><td>22</td><td>车龄分布</td><td>d_vehicle_static_all</td><td>按车龄分段统计</td></tr>
+<tr><td>28</td><td>月度行驶里程</td><td>dws_vehicle_gathermile_m</td><td>按里程分段统计</td></tr>
+<tr><td>29</td><td>月度运营天数</td><td>dws_vehicle_gathermile_m</td><td>按月运营天数分段</td></tr>
+<tr><td>30</td><td>省份通行频次</td><td>dws_vehicle_pass_province_m</td><td>各省通行车辆数排名</td></tr>
+<tr><td>32</td><td>城市通行频次</td><td>dws_vehicle_pass_city_m</td><td>各市通行车辆数排名</td></tr>
 </table>
 
 <h3>下载模板（4个）</h3>
 <table>
-<tr><th>模板</th><th>TB Code</th><th>内容</th></tr>
-<tr><td>保有量统计下载</td><td>—</td><td>指定区域车辆保有量CSV</td></tr>
-<tr><td>新增车辆统计下载</td><td>34</td><td>指定区域新增车辆CSV</td></tr>
-<tr><td>迁出统计下载</td><td>35</td><td>指定区域迁出车辆CSV</td></tr>
-<tr><td>运单明细下载</td><td>—</td><td>指定条件运单明细CSV</td></tr>
-</table>
-
-<h3>技术栈</h3>
-<table>
-<tr><th>层</th><th>技术</th><th>负责人</th></tr>
-<tr><td>前端</td><td>物流科技UI + 大卡鹰眼前端</td><td>璇子（0.5人力）</td></tr>
-<tr><td>后端</td><td>模板引擎 + 数据接口</td><td>国文</td></tr>
-<tr><td>数据</td><td>ClickHouse（中交数据）+ Spark SQL</td><td>超平</td></tr>
-<tr><td>算法</td><td>模板计算逻辑 + SQL开发</td><td>晓明（立杰/许宁/程龙）</td></tr>
+<tr><th>TB</th><th>模板</th><th>说明</th></tr>
+<tr><td>12</td><td>新增车辆统计</td><td>诚实实业专用。按日期+地理范围筛选，查看每日新增入网车辆明细。</td></tr>
+<tr><td>14</td><td>迁出统计</td><td>诚实实业专用。与新增车辆共用基础字段，额外含迁出/迁入客户名称，可追踪车辆在企业间流转。</td></tr>
+<tr><td>13</td><td>保有量统计下载</td><td>指定区域车辆保有量CSV导出。</td></tr>
+<tr><td>33</td><td>运单明细下载</td><td>指定条件运单明细CSV导出。</td></tr>
 </table>
 </section>
 
 <section>
 <h2>二、项目事实</h2>
 
+<h3>当前状态</h3>
+<p>在线版本 <span class="tag">V0.2.2</span>，包含 14 个固定模板 + 4 个下载模板 + 企业名称解密。</p>
+
 <h3>团队</h3>
 <table>
 <tr><th>角色</th><th>人员</th></tr>
 <tr><td>PM</td><td>杨航（航哥）</td></tr>
 <tr><td>算法</td><td>晓明 / 立杰 / 许宁 / 程龙</td></tr>
-<tr><td>前端</td><td>璇子（大卡 0.5 + 物流科技 0.5）</td></tr>
-<tr><td>后端</td><td>国文</td></tr>
+<tr><td>前端</td><td>庆杰</td></tr>
+<tr><td>UI</td><td>璇子</td></tr>
+<tr><td>后端</td><td>梁健</td></tr>
 <tr><td>数据</td><td>超平</td></tr>
-<tr><td>数据外采</td><td>利玲</td></tr>
 </table>
 
 <h3>客户</h3>
-<p><strong>诚实实业</strong> — 已上线，唯一使用企业名称解密工具的客户，使用 TB 34/35。</p>
-</section>
-
-<section>
-<h2>三、业务事实</h2>
-
-<h3>定价（V6 / 2026-05-21 确定）</h3>
-<p>公式：¥30,000（底价）× 时间系数 × 数据量系数 × 核心字段系数</p>
-<p>省级三档：小省 ≤20万辆 ×60% | 中省 20-50万辆 ×100% | 大省 >50万辆 ×140%</p>
-<p>市级 ≈ 省级的 20-25%。跨区域溢价 +20%。</p>
-<p>合同：分析模板列入合同，按数据范围定价（已和利玲确认，待与法务同步）。</p>
-
-<h3>数据范围</h3>
-<p>全国重卡约 872 万辆。数据时间：2025年12月至今（按月滚动）。货类：17 类标准枚举。</p>
-
-<h3>对外品宣</h3>
-<p>推介H5（2026-06-09 发布）— 面向货主、物流企业及物流科技公司。</p>
-<p>李韫斐（中交兴路销售老大）审对外材料。</p>
+<p><strong>诚实实业</strong> — 已上线。唯一使用企业名称解密工具的客户，使用新增车辆统计(TB 12)和迁出统计(TB 14)。</p>
 </section>
 
 <div class="footer">绽放 · for Hermes · 2026.06.11<br>只记落地的事实</div>
