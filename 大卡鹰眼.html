@@ -28,13 +28,13 @@ th{font-weight:600;color:var(--muted);font-size:.75rem;text-transform:uppercase;
 </style>
 </head>
 <body>
-<div class="header"><h1>大卡鹰眼 · 项目事实</h1><p>更新于 2026-06-11 · 不记动作，只记当前状态</p></div>
+<div class="header"><h1>大卡鹰眼 · 项目事实</h1><p>更新于 2026-06-11 · 只记落地的事实</p></div>
 <div class="container">
 
 <section>
 <h2>零、资产全景图</h2>
 <h3>功能模块</h3>
-<div class="tree">大卡鹰眼（数据工坊）
+<div class="tree">大卡鹰眼（数据工坊）  —  当前在线版本 V0.2.2
 ├── 固定模板分析（14个）
 │   ├── 货物流向类（2个）→ dwd_vehicle_virtual_order_di
 │   ├── 线路分析类（1个）→ dws_vehicle_usual_line_m
@@ -43,10 +43,9 @@ th{font-weight:600;color:var(--muted);font-size:.75rem;text-transform:uppercase;
 │   ├── 通行频次类（2个）→ dws_vehicle_pass_*_m
 │   └── 对比分析类（1个）→ dws_vehicle_gathermile_m
 ├── 下载模板（4个：保有量/新增车辆/迁出/运单明细）
-├── 工具：企业名称解密（当前无权限管控）
-└── 蜀道数联专属（V0.2.4 规划：POI/道路/区域三级）</div>
+└── 工具：企业名称解密（无权限管控，仅诚实实业在用）</div>
 
-<h3>数据资产（35个ClickHouse表）</h3>
+<h3>数据资产（ClickHouse，35个表）</h3>
 <table>
 <tr><th>层级</th><th>表数</th><th>核心表</th></tr>
 <tr><td>DWD 明细层</td><td>17</td><td>虚拟运单(1.8TB)、车辆轨迹(621TB)、停留点(42.5TB)</td></tr>
@@ -54,23 +53,15 @@ th{font-weight:600;color:var(--muted);font-size:.75rem;text-transform:uppercase;
 <tr><td>D 维度层</td><td>7</td><td>车辆(872万)、车辆静态(2299万)、公司(79万)</td></tr>
 </table>
 
-<h3>客户使用</h3>
+<h3>客户</h3>
 <table>
-<tr><th>客户</th><th>状态</th><th>使用模板</th></tr>
-<tr><td>诚实实业</td><td>已上线</td><td>新增车辆统计(TB 34)、迁出统计(TB 35)</td></tr>
-<tr><td>蜀道数联</td><td>对接中</td><td>POI/道路/区域三级分析（V0.2.4）</td></tr>
+<tr><th>客户</th><th>使用模板</th></tr>
+<tr><td>诚实实业</td><td>新增车辆统计(TB 34)、迁出统计(TB 35)</td></tr>
 </table>
 </section>
 
 <section>
 <h2>一、产品事实</h2>
-<h3>版本状态</h3>
-<table>
-<tr><th>版本</th><th>状态</th><th>范围</th></tr>
-<tr><td>V0.2.2</td><td>已上线</td><td>固定模板分析（14个）+ 下载模板（4个）+ 企业名称解密</td></tr>
-<tr><td>V0.2.3</td><td>提测中（6/11）</td><td>项目进度管控（6/12 上线）</td></tr>
-<tr><td>V0.2.4</td><td>规划中</td><td>蜀道三模板 + 自定义模板Skill + 管理后台独立 + UI更新 + 登录阻断</td></tr>
-</table>
 
 <h3>分析模板清单（14个）</h3>
 <table>
@@ -112,8 +103,7 @@ th{font-weight:600;color:var(--muted);font-size:.75rem;text-transform:uppercase;
 
 <section>
 <h2>二、项目事实</h2>
-<h3>迭代状态</h3>
-<p>当前版本 <span class="tag">V0.2.3</span> 6/11 提测，6/12 上线。下一版本 <span class="tag">V0.2.4</span> 规划中。</p>
+
 <h3>团队</h3>
 <table>
 <tr><th>角色</th><th>人员</th></tr>
@@ -124,24 +114,29 @@ th{font-weight:600;color:var(--muted);font-size:.75rem;text-transform:uppercase;
 <tr><td>数据</td><td>超平</td></tr>
 <tr><td>数据外采</td><td>利玲</td></tr>
 </table>
+
 <h3>客户</h3>
 <p><strong>诚实实业</strong> — 已上线，唯一使用企业名称解密工具的客户，使用 TB 34/35。</p>
-<p><strong>蜀道数联</strong> — 对接中，V0.2.4 将上线专属三级分析模板。</p>
 </section>
 
 <section>
 <h2>三、业务事实</h2>
-<h3>定价（V6 / 2026-05-21）</h3>
+
+<h3>定价（V6 / 2026-05-21 确定）</h3>
 <p>公式：¥30,000（底价）× 时间系数 × 数据量系数 × 核心字段系数</p>
 <p>省级三档：小省 ≤20万辆 ×60% | 中省 20-50万辆 ×100% | 大省 >50万辆 ×140%</p>
-<p>市级 ≈ 省级的 20-25%。跨区域溢价 +20%。合同：模板列入合同，按数据范围定价。</p>
+<p>市级 ≈ 省级的 20-25%。跨区域溢价 +20%。</p>
+<p>合同：分析模板列入合同，按数据范围定价（已和利玲确认，待与法务同步）。</p>
+
 <h3>数据范围</h3>
-<p>全国重卡约 872 万辆。时间：2025年12月至今。17 类标准货类。</p>
+<p>全国重卡约 872 万辆。数据时间：2025年12月至今（按月滚动）。货类：17 类标准枚举。</p>
+
 <h3>对外品宣</h3>
-<p>推介H5（2026-06-09）— 面向货主/物流企业/物流科技公司。李韫斐（中交兴路销售老大）审对外材料。</p>
+<p>推介H5（2026-06-09 发布）— 面向货主、物流企业及物流科技公司。</p>
+<p>李韫斐（中交兴路销售老大）审对外材料。</p>
 </section>
 
-<div class="footer">绽放 · for Hermes · 2026.06.11<br>事实不记动作，只记当前状态</div>
+<div class="footer">绽放 · for Hermes · 2026.06.11<br>只记落地的事实</div>
 </div>
 </body>
 </html>
